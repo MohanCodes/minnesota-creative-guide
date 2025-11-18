@@ -8,7 +8,7 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "MiracleArts Creative Guide | Minnesota Resource Directory",
-  description: "Discover creative resources across Minnesota - studios, galleries, supplies, and more",
+  description: "Discover galleries, art supply stores, and creative resources across the state",
   generator: "v0.app",
 }
 

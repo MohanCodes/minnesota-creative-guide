@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Filter, Search } from "lucide-react"
-import { useSearchParams } from "next/navigation"
+import { Filter, Search } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from "react"
 import mockData from "@/data/mock-data.json"
 
@@ -138,15 +138,15 @@ export default function BrowsePage() {
           </aside>
 
           {/* Mobile Filters */}
-          <div className="lg:hidden fixed bottom-4 right-4 z-40">
+          <div className="lg:hidden fixed bottom-4 right-4 z-[200]">
             <Sheet>
               <SheetTrigger asChild>
-                <Button size="lg" className="rounded-full shadow-lg">
+                <Button size="lg" className="rounded-full shadow-lg bg-accent text-accent-foreground hover:bg-accent/90">
                   <Filter className="mr-2 h-5 w-5" />
                   Filters
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left" className="w-80">
+              <SheetContent side="left" className="w-80 overflow-y-auto z-[300] p-6">
                 <SearchFilters
                   categories={mockData.categories}
                   selectedCategories={selectedCategories}
