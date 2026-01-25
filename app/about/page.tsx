@@ -25,12 +25,12 @@ export default function AboutPage() {
             <Card className="bg-card">
               <CardContent className="p-6">
                 <h2 className="text-2xl font-semibold mb-4">Our Mission</h2>
-                <p className="text-foreground/80 leading-relaxed mb-4">
+                <p className="text-background/80 leading-relaxed mb-4">
                   MiracleArts, commonly known as "Minnesota Art Resource Hub" is a youth-centered creative education 
                   organization serving youth Minnesota creatives. Our resources aim to inspire, connect and educate 
                   youth Minnesota creatives.
                 </p>
-                <p className="text-foreground/80 leading-relaxed">
+                <p className="text-background/80 leading-relaxed">
                   Our founder, Xavier Thomas, originally created the MiracleArts Resource Guide to help his sister 
                   find a local sewing class. That small, personal mission grew into a comprehensive statewide guide, 
                   connecting youth to creative opportunities throughout Minnesota.
@@ -45,7 +45,7 @@ export default function AboutPage() {
                     <Map className="h-6 w-6 text-accent" />
                   </div>
                   <h3 className="font-semibold mb-2">Statewide Coverage</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-background/70">
                     Discover creative resources across all of Minnesota&apos;s counties
                   </p>
                 </CardContent>
@@ -57,7 +57,7 @@ export default function AboutPage() {
                     <Users className="h-6 w-6 text-accent" />
                   </div>
                   <h3 className="font-semibold mb-2">Community Driven</h3>
-                  <p className="text-sm text-foreground/70">Built by and for the creative community of Minnesota</p>
+                  <p className="text-sm text-background/70">Built by and for the creative community of Minnesota</p>
                 </CardContent>
               </Card>
 
@@ -67,7 +67,7 @@ export default function AboutPage() {
                     <Heart className="h-6 w-6 text-accent" />
                   </div>
                   <h3 className="font-semibold mb-2">Supporting Diversity</h3>
-                  <p className="text-sm text-foreground/70">
+                  <p className="text-sm text-background/70">
                     Highlighting women-owned, POC-owned, and accessible spaces
                   </p>
                 </CardContent>
@@ -77,32 +77,32 @@ export default function AboutPage() {
             <Card>
               <CardContent className="p-6">
                 <h2 className="text-2xl font-semibold mb-4">What We Offer</h2>
-                <ul className="space-y-3 text-muted-foreground">
+                <ul className="space-y-3 text-backgroun">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
                     <span>
-                      <strong className="text-foreground">Comprehensive Directory:</strong> Browse galleries, studios,
+                      <strong className="text-background">Comprehensive Directory:</strong> Browse galleries, studios,
                       supply stores, makerspaces, and more
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
                     <span>
-                      <strong className="text-foreground">Advanced Search:</strong> Filter by category, location, and
+                      <strong className="text-background">Advanced Search:</strong> Filter by category, location, and
                       special attributes
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
                     <span>
-                      <strong className="text-foreground">Interactive Map:</strong> Visualize resources geographically
+                      <strong className="text-background">Interactive Map:</strong> Visualize resources geographically
                       to find what&apos;s near you
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-1">•</span>
                     <span>
-                      <strong className="text-foreground">Detailed Profiles:</strong> Get complete information about
+                      <strong className="text-background">Detailed Profiles:</strong> Get complete information about
                       each organization
                     </span>
                   </li>

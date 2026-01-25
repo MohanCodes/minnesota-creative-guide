@@ -2,39 +2,69 @@
   "categories": [
     {
       "id": "1",
-      "name": "Art Gallery",
-      "color_code": "#9b87f5",
+      "name": "Art Gallery & Creative Space",
+      "color_code": "#FF69B4",
       "icon": "palette"
     },
     {
       "id": "2",
-      "name": "Art Studio",
-      "color_code": "#7c3aed",
-      "icon": "brush"
+      "name": "Art Program/School",
+      "color_code": "#00D9A3",
+      "icon": "graduation-cap"
     },
     {
       "id": "3",
-      "name": "Supply Store",
-      "color_code": "#a78bfa",
+      "name": "Art Supply Store",
+      "color_code": "#6B7FED",
       "icon": "shopping-bag"
     },
     {
       "id": "4",
-      "name": "Nonprofit",
-      "color_code": "#c4b5fd",
-      "icon": "heart"
+      "name": "Community Theatre",
+      "color_code": "#FF9F5A",
+      "icon": "theater-masks"
     },
     {
       "id": "5",
-      "name": "Performance Space",
-      "color_code": "#8b5cf6",
+      "name": "Dance School & Studio",
+      "color_code": "#B8E86D",
       "icon": "music"
     },
     {
       "id": "6",
       "name": "Makerspace",
-      "color_code": "#6d28d9",
+      "color_code": "#9FB8AD",
       "icon": "wrench"
+    },
+    {
+      "id": "7",
+      "name": "Non-profit Art Service Organization",
+      "color_code": "#FFB347",
+      "icon": "heart"
+    },
+    {
+      "id": "8",
+      "name": "Pottery/Sewing Studio",
+      "color_code": "#C5998B",
+      "icon": "paint-brush"
+    },
+    {
+      "id": "9",
+      "name": "Recording Studio",
+      "color_code": "#7A9FD9",
+      "icon": "music"
+    },
+    {
+      "id": "10",
+      "name": "Regional Art Council",
+      "color_code": "#F4C430",
+      "icon": "landmark"
+    },
+    {
+      "id": "11",
+      "name": "University",
+      "color_code": "#FF7F50",
+      "icon": "university"
     }
   ],
   "organizations": [

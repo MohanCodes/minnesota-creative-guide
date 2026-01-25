@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Menu } from 'lucide-react'
 import Link from "next/link"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import Image from "next/image"
 
 export function Header() {
   const navLinks = [
@@ -13,13 +14,18 @@ export function Header() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-foreground/95 backdrop-blur">
+      <div className="w-full max-w-7xl mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent">
-            <span className="text-lg font-bold text-accent-foreground">M</span>
-          </div>
-          <span className="hidden font-bold text-lg sm:inline-block">MiracleArts</span>
+          <Image 
+              src="/ma6white.png" 
+              alt="MiracleArts Logo" 
+              width={64} 
+              height={64} 
+              className="object-contain"
+              priority
+          />
+          <span className="hidden font-bold text-lg sm:inline-block text-white">MiracleArts</span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-6">
@@ -27,7 +33,7 @@ export function Header() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-foreground/80 transition-colors hover:text-accent"
+              className="text-sm font-medium text-background/80 transition-colors hover:text-accent"
             >
               {link.label}
             </Link>
@@ -47,7 +53,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-lg font-medium text-foreground/80 transition-colors hover:text-accent py-2"
+                  className="text-lg font-medium text-background/80 transition-colors hover:text-accent py-2"
                 >
                   {link.label}
                 </Link>

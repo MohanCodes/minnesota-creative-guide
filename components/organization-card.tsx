@@ -1,116 +1,132 @@
-"use client"
+'use client';
 
+import React from 'react';
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { MapPin, Phone, Globe } from 'lucide-react'
-import Image from "next/image"
-import Link from "next/link"
+import { MapPin, Phone, Globe, Mail } from 'lucide-react'
+import { CopyLinkButton } from '@/components/copy-link-button'
+import { useRouter } from 'next/navigation'
 
 interface OrganizationCardProps {
   organization: {
     id: string
-    name: string
+    resource: string
     description: string | null
-    city: string | null
-    county: string | null
-    image_url: string | null
+    service_area: string | null
     website: string | null
-    phone: string | null
-    category: string
-    is_women_owned: boolean
-    is_poc_owned: boolean
-    is_accessible: boolean
-    is_youth_focused: boolean
+    number: string | null
+    email: string | null
+    address: string | null
+    upcoming_events: string | null
+    opportunities: string | null
+    how_to_support: string | null
+    women_owned: boolean
+    poc_owned: boolean
+    comments: string | null
+    edition: string[] | null
   }
-  categoryColor?: string
 }
 
-export function OrganizationCard({ organization, categoryColor }: OrganizationCardProps) {
+export function OrganizationCard({ organization }: OrganizationCardProps) {
+  const router = useRouter()
   const badges = []
-  if (organization.is_women_owned) badges.push("Women-Owned")
-  if (organization.is_poc_owned) badges.push("POC-Owned")
-  if (organization.is_accessible) badges.push("Accessible")
-  if (organization.is_youth_focused) badges.push("Youth-Focused")
+  if (organization.women_owned) badges.push("Women-Owned")
+  if (organization.poc_owned) badges.push("POC-Owned")
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Only navigate if the click is not on a link
+    if ((e.target as HTMLElement).tagName !== 'A') {
+      router.push(`/organizations/${organization.id}`)
+    }
+  }
 
   return (
-    <Link href={`/organizations/${organization.id}`}>
-      <Card className="group overflow-hidden transition-all hover:shadow-lg hover:border-accent/50 bg-card">
-        <div className="relative aspect-video overflow-hidden bg-muted">
-          {organization.image_url ? (
-            <Image
-              src={organization.image_url || "/placeholder.svg"}
-              alt={organization.name}
-              fill
-              className="object-cover transition-transform group-hover:scale-105"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center bg-secondary">
-              <span className="text-4xl font-bold text-foreground/20">{organization.name.charAt(0)}</span>
+    <Card className="group relative overflow-hidden transition-all hover:shadow-lg hover:border-accent/50 bg-card cursor-pointer" onClick={handleCardClick}>
+      <CardContent className="">
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h3 className="font-semibold text-lg leading-tight line-clamp-1 group-hover:text-accent transition-colors">
+            {organization.resource}
+          </h3>
+        </div>
+
+        {organization.description && (
+          <p className="text-sm text-card-foreground/70 line-clamp-2 mb-3">{organization.description}</p>
+        )}
+
+        <div className="flex flex-col gap-2 text-sm text-card-foreground/70">
+          {organization.address && (
+            <div className="flex items-start gap-1">
+              <MapPin className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+              <span className="line-clamp-1">{organization.address}</span>
+            </div>
+          )}
+
+          {organization.number && (
+            <div className="flex items-center gap-1">
+              <Phone className="h-3.5 w-3.5 shrink-0" />
+              <a href={`tel:${organization.number}`} className="hover:text-accent">
+                {organization.number}
+              </a>
+            </div>
+          )}
+
+          {organization.email && (
+            <div className="flex items-center gap-1">
+              <Mail className="h-3.5 w-3.5 shrink-0" />
+              <a href={`mailto:${organization.email}`} className="hover:text-accent line-clamp-1">
+                {organization.email}
+              </a>
+            </div>
+          )}
+
+          {organization.website && (
+            <div className="flex items-center gap-1">
+              <Globe className="h-3.5 w-3.5 shrink-0" />
+              <a 
+                href={organization.website} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="line-clamp-1 hover:text-accent"
+              >
+                {organization.website.replace(/^https?:\/\//, '')}
+              </a>
             </div>
           )}
         </div>
+      </CardContent>
 
-        <CardContent className="p-4">
-          <div className="flex items-start justify-between gap-2 mb-2">
-            <h3 className="font-semibold text-lg leading-tight line-clamp-1 group-hover:text-accent transition-colors">
-              {organization.name}
-            </h3>
-            {organization.category && (
-              <Badge
-                variant="outline"
-                className="shrink-0 bg-white"
-                style={{
-                  color: categoryColor,
-                  borderColor: categoryColor,
-                }}
-              >
-                {organization.category}
-              </Badge>
-            )}
-          </div>
-
-          {organization.description && (
-            <p className="text-sm text-foreground/70 line-clamp-2 mb-3">{organization.description}</p>
-          )}
-
-          <div className="flex flex-col gap-1 text-sm text-foreground/70">
-            {(organization.city || organization.county) && (
-              <div className="flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5 shrink-0" />
-                <span className="line-clamp-1">
-                  {organization.city}
-                  {organization.city && organization.county && ", "}
-                  {organization.county}
-                </span>
-              </div>
-            )}
-            {organization.phone && (
-              <div className="flex items-center gap-1">
-                <Phone className="h-3.5 w-3.5 shrink-0" />
-                <span>{organization.phone}</span>
-              </div>
-            )}
-            {organization.website && (
-              <div className="flex items-center gap-1">
-                <Globe className="h-3.5 w-3.5 shrink-0" />
-                <span className="line-clamp-1 hover:text-accent">{new URL(organization.website).hostname}</span>
-              </div>
-            )}
-          </div>
-        </CardContent>
-
-        {badges.length > 0 && (
-          <CardFooter className="p-4 pt-0">
-            <div className="flex flex-wrap gap-1">
+      {(badges.length > 0 || organization.how_to_support || (organization.edition && organization.edition.length > 0)) && (
+        <CardFooter className="p-4 pt-0 flex flex-col items-start gap-2">
+          {(badges.length > 0 || (organization.edition && organization.edition.length > 0)) && (
+            <div className="flex flex-wrap gap-1 w-full">
+              {organization.edition && organization.edition.length > 0 && (
+                <Badge 
+                  variant="outline" 
+                  className="text-xs bg-white border-card-foreground/30 text-gray-700"
+                >
+                  {organization.edition.join(", ")}
+                </Badge>
+              )}
               {badges.map((badge) => (
-                <Badge key={badge} variant="outline" className="text-xs bg-white border-foreground/30">
+                <Badge 
+                  key={badge} 
+                  variant="outline" 
+                  className="text-xs bg-white border-card-foreground/30 text-gray-700"
+                >
                   {badge}
                 </Badge>
               ))}
             </div>
-          </CardFooter>
-        )}
-      </Card>
-    </Link>
+          )}
+          
+          {organization.how_to_support && (
+            <p className="text-xs text-card-foreground/60 mt-1">
+              <span className="font-medium">How to support:</span> {organization.how_to_support}
+            </p>
+          )}
+        </CardFooter>
+      )}
+      <CopyLinkButton url={`${typeof window !== 'undefined' ? window.location.origin : ''}/organizations/${organization.id}`} className="absolute right-3 top-3" />
+    </Card>
   )
-}
+} 
