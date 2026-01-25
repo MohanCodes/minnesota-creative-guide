@@ -6,7 +6,7 @@ import { cookies } from 'next/headers'
 import 'server-only'
 
 export async function createServerSupabaseClient() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   return createSupabaseServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,14 +18,14 @@ export async function createServerSupabaseClient() {
         },
         set(name: string, value: string, options: any) {
           try {
-            cookieStore.set({ name, value, ...options })
+            ;(cookieStore as any).set({ name, value, ...options })
           } catch (error) {
             // Handle error if needed
           }
         },
         remove(name: string, options: any) {
           try {
-            cookieStore.set({ name, value: '', ...options })
+            ;(cookieStore as any).set({ name, value: '', ...options })
           } catch (error) {
             // Handle error if needed
           }
