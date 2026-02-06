@@ -119,19 +119,19 @@ export default function HomePage() {
               </form>
 
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30 hover:bg-accent hover:text-accent-foreground">
+                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30">
                   <Link href="/browse">
                     Browse All Resources
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30 hover:bg-accent hover:text-accent-foreground">
+                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30">
                   <Link href="/map">
                     Map
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30 hover:bg-accent hover:text-accent-foreground">
+                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30">
                   <Link href="https://miraclearts.org/">
                     Miracle Arts
                     <ArrowRight className="ml-2 h-5 w-5" />

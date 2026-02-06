@@ -126,10 +126,10 @@ export default function BrowsePage() {
     if (debouncedSearchQuery) {
       const q = debouncedSearchQuery.toLowerCase();
       filtered = filtered.filter((org) => {
-        const name = (org.name as string | undefined)?.toLowerCase() || "";
+        const resource = (org.resource as string | undefined)?.toLowerCase() || "";
         const description = (org.description as string | undefined)?.toLowerCase() || "";
         const serviceArea = (org.service_area as string | undefined)?.toLowerCase() || "";
-        return name.includes(q) || description.includes(q) || serviceArea.includes(q);
+        return resource.includes(q) || description.includes(q) || serviceArea.includes(q);
       });
     }
 
@@ -386,7 +386,7 @@ export default function BrowsePage() {
           </div>
 
           {/* Results */}
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <form onSubmit={handleSearch} className="w-full md:max-w-xl">
                 <div className="relative">
@@ -428,17 +428,19 @@ export default function BrowsePage() {
               </div>
             ) : (
               <>
-                <Masonry
-                  breakpointCols={breakpointColumnsObj}
-                  className="flex w-auto -ml-4"
-                  columnClassName="pl-4 bg-clip-padding"
-                >
-                  {pageItems.map((org) => (
-                    <div key={org.id} className="mb-4">
-                      <OrganizationCard organization={org} />
-                    </div>
-                  ))}
-                </Masonry>
+                <div className="w-full">
+                  <Masonry
+                    breakpointCols={breakpointColumnsObj}
+                    className="flex w-auto -ml-4"
+                    columnClassName="pl-4 bg-clip-padding"
+                  >
+                    {pageItems.map((org) => (
+                      <div key={org.id} className="mb-4">
+                        <OrganizationCard organization={org} />
+                      </div>
+                    ))}
+                  </Masonry>
+                </div>
 
                 {total > 0 && paginationControls}
               </>
