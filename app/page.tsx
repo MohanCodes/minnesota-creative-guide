@@ -11,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-// Image data with descriptions
+// Image data with descriptions!
 const imageData = [
   {
     path: "/cycle-images/alt-inspiro.png",
