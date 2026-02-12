@@ -240,8 +240,6 @@ npm run start  # For Node.js servers
 ### **Environment Variables for Production**
 Ensure all environment variables are configured in your deployment platform:
 - Supabase URL and keys
-- NextAuth configuration
-- Analytics tracking IDs
 
 ## Contributing
 
@@ -251,10 +249,9 @@ We welcome contributions from the community! Here's how you can help:
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
 3. Make your changes with proper TypeScript types
-4. Test thoroughly: `npm run lint` and `npm run build`
-5. Commit your changes: `git commit -m 'Add amazing feature'`
-6. Push to the branch: `git push origin feature/amazing-feature`
-7. Open a Pull Request with detailed description
+4. Commit your changes: `git commit -m 'Add amazing feature'`
+5. Push to the branch: `git push origin feature/amazing-feature`
+6. Open a Pull Request with detailed description
 
 ### **Code Guidelines**
 - Follow TypeScript and React best practices
@@ -268,14 +265,13 @@ We welcome contributions from the community! Here's how you can help:
 - Use GitHub Issues for bug reports and feature requests
 - Provide detailed reproduction steps and environment info
 - Include screenshots or screen recordings for UI issues
-- Tag relevant team members for visibility
+- Tag relevant team members for visibility (me! 🙏)
 
 ## Design System
 
 ### **Color Palette**
 - Primary colors based on category system
 - Accessibility-compliant contrast ratios
-- Dark/light theme support
 
 ### **Typography**
 - **Geist** - Primary font for body text
@@ -292,11 +288,10 @@ We welcome contributions from the community! Here's how you can help:
 ### **Authentication**
 - Supabase Auth with email/password and social providers
 - Row Level Security (RLS) for data protection
-- Secure session management
+- Secure session management with cookie
 
 ### **Data Protection**
 - Environment variable configuration
-- Input validation with Zod schemas
 - XSS protection through React's built-in safeguards
 - CSRF protection with Next.js middleware
 
