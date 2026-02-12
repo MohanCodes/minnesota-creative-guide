@@ -51,7 +51,7 @@ The Minnesota Creative Guide is a modern web application that serves as a compre
 
 ### **Responsive Design**
 - Mobile-first approach with progressive enhancement
-- Accessible UI components following WCAG guidelines
+- Accessible UI components
 - Touch-friendly interface for mobile devices
 - Cross-browser compatibility
 
@@ -59,7 +59,6 @@ The Minnesota Creative Guide is a modern web application that serves as a compre
 - Secure authentication system
 - Resource management and approval workflow
 - Category management
-- Data import/export capabilities
 
 ## Tech Stack
 
@@ -70,15 +69,12 @@ The Minnesota Creative Guide is a modern web application that serves as a compre
 
 ### **UI Components & Styling**
 - **Tailwind CSS 4.1.9** - Modern utility-first CSS framework
-- **Radix UI** - Unstyled, accessible component primitives
 - **Lucide React** - Beautiful icon library
 - **shadcn/ui** - High-quality component library built on Radix
 
 ### **Data & State Management**
 - **Supabase** - Backend-as-a-Service with PostgreSQL
 - **React Hook Form** - Performant form management
-- **Zod** - TypeScript-first schema validation
-- **React Query (TanStack Query)** - Server state management
 
 ### **Maps & Geolocation**
 - **Leaflet 1.9.4** - Open-source interactive maps
@@ -88,8 +84,6 @@ The Minnesota Creative Guide is a modern web application that serves as a compre
 ### **Additional Libraries**
 - **React Masonry CSS** - Pinterest-style layout
 - **Date-fns** - Modern date utility library
-- **Sonner** - Toast notifications
-- **Vercel Analytics** - Performance and usage analytics
 
 ### **Development Tools**
 - **ESLint** - Code quality and consistency
@@ -313,7 +307,7 @@ We welcome contributions from the community! Here's how you can help:
 - Code splitting with dynamic imports
 - Lazy loading for map components
 - Debounced search to reduce API calls
-- Pagination for large datasets
+- Pagination for large datasets, both on admin page and user page
 
 ### **Monitoring**
 - Vercel Analytics for performance tracking
@@ -321,7 +315,6 @@ We welcome contributions from the community! Here's how you can help:
 - Error boundary implementation
 
 ## Browser Support
-
 - Chrome/Edge 90+
 - Firefox 88+
 - Safari 14+
@@ -332,7 +325,6 @@ We welcome contributions from the community! Here's how you can help:
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Credits
-
 - **Initial Template**: [v0.app](https://v0.app) - AI-powered development tool for the base template
 - **Manual Development**: All core functionality, features, and integrations coded manually
 - **Deployment**: [Vercel](https://vercel.com) - Modern deployment platform
@@ -345,9 +337,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **MiracleArts Organization**
 - Website: [miraclearts.org](https://miraclearts.org/)
-- Email: contact@miraclearts.org
+- Email: xavier@miraclearts.org
 - Social Media: Follow us for updates and creative community news
 
 ---
 
-**Built with dedication for Minnesota's Creative Community**
+**Built with 💜 for Minnesota's Creative Community**
