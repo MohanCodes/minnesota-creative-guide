@@ -25,6 +25,7 @@ export interface Organization {
   website: string
   is_women_owned: boolean
   is_poc_owned: boolean
+  is_lgbtqia_owned: boolean
   is_accessible: boolean
   is_youth_focused: boolean
   is_approved: boolean
@@ -166,10 +167,14 @@ export function InteractiveMap({ organizations, categories }: InteractiveMapProp
 
         markersRef.current.push(marker)
 
-        // Add click listener to show organization details
         marker.on("click", () => {
           setSelectedOrg(org)
-          mapInstanceRef.current.setView([org.latitude, org.longitude], 10, { animate: true })
+          const currentZoom = mapInstanceRef.current.getZoom()
+          mapInstanceRef.current.setView(
+            [org.latitude, org.longitude], 
+            Math.max(currentZoom, 10),
+            { animate: true }
+          )
         })
       }
     })
@@ -263,6 +268,11 @@ export function InteractiveMap({ organizations, categories }: InteractiveMapProp
               {selectedOrg.is_poc_owned && (
                 <Badge variant="outline" className="text-xs bg-white border-card-foreground/30 text-gray-700">
                   POC-Owned
+                </Badge>
+              )}
+              {selectedOrg.is_lgbtqia_owned && (
+                <Badge variant="outline" className="text-xs bg-white border-card-foreground/30 text-gray-700">
+                  LGBTQIA+ Owned
                 </Badge>
               )}
               {selectedOrg.is_accessible && (

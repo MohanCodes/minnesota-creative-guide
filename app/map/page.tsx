@@ -24,6 +24,7 @@ export default function MapPage() {
   const [filters, setFilters] = useState({
     womenOwned: false,
     pocOwned: false,
+    lgbtqiaOwned: false,
     accessible: false,
     youthFocused: false,
   })
@@ -100,6 +101,7 @@ export default function MapPage() {
     setFilters({
       womenOwned: false,
       pocOwned: false,
+      lgbtqiaOwned: false,
       accessible: false,
       youthFocused: false,
     });
@@ -121,6 +123,7 @@ export default function MapPage() {
       selectedEditions.length > 0 ||
       filters.womenOwned ||
       filters.pocOwned ||
+      filters.lgbtqiaOwned ||
       filters.accessible ||
       filters.youthFocused;
 
@@ -170,6 +173,9 @@ export default function MapPage() {
     if (filters.pocOwned) {
       filtered = filtered.filter((org) => org.poc_owned === true);
     }
+    if (filters.lgbtqiaOwned) {
+      filtered = filtered.filter((org) => org.lgbtqia_owned === true);
+    }
 
     return filtered;
   }, [
@@ -179,6 +185,7 @@ export default function MapPage() {
     selectedEditions,
     filters.womenOwned,
     filters.pocOwned,
+    filters.lgbtqiaOwned,
     filters.accessible,
     filters.youthFocused,
   ]);

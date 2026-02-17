@@ -12,6 +12,7 @@ import mockData from "@/data/mock-data.json";
 type Filters = {
   womenOwned: boolean;
   pocOwned: boolean;
+  lgbtqiaOwned: boolean;
   accessible: boolean;
   youthFocused: boolean;
 };
@@ -143,6 +144,19 @@ export function SearchFilters({
                 className="text-sm font-normal cursor-pointer"
               >
                 POC-Owned
+              </Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="lgbtqia-owned"
+                checked={filters.lgbtqiaOwned}
+                onCheckedChange={() => onFilterChange("lgbtqiaOwned")}
+              />
+              <Label
+                htmlFor="lgbtqia-owned"
+                className="text-sm font-normal cursor-pointer"
+              >
+                LGBTQIA+ Owned
               </Label>
             </div>
           </div>

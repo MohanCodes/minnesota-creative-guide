@@ -22,6 +22,7 @@ interface OrganizationCardProps {
     how_to_support: string | null
     women_owned: boolean
     poc_owned: boolean
+    lgbtqia_owned: boolean
     comments: string | null
     edition: string[] | null
   }
@@ -32,6 +33,7 @@ export function OrganizationCard({ organization }: OrganizationCardProps) {
   const badges = []
   if (organization.women_owned) badges.push("Women-Owned")
   if (organization.poc_owned) badges.push("POC-Owned")
+  if (organization.lgbtqia_owned) badges.push("LGBTQIA+ Owned")
 
   const handleCardClick = (e: React.MouseEvent) => {
     // Only navigate if the click is not on a link

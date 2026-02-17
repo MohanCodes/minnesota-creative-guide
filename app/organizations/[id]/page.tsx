@@ -139,6 +139,7 @@ export default function OrganizationPage() {
   const howToSupport = organization.how_to_support as string | undefined;
   const womenOwned = Boolean(organization.women_owned);
   const pocOwned = Boolean(organization.poc_owned);
+  const lgbtqiaOwned = Boolean(organization.lgbtqia_owned);
   const comments = organization.comments as string | undefined;
   const edition = organization.edition as string | undefined;
 
@@ -194,6 +195,11 @@ export default function OrganizationPage() {
                 {pocOwned && (
                   <Badge variant="outline" className="bg-primary/5">
                     POC-Owned
+                  </Badge>
+                )}
+                {lgbtqiaOwned && (
+                  <Badge variant="outline" className="bg-primary/5">
+                    LGBTQIA+ Owned
                   </Badge>
                 )}
               </div>
