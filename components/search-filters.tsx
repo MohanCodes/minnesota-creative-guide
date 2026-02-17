@@ -2,12 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import { X } from "lucide-react";
-import mockData from "@/data/mock-data.json";
 
 type Filters = {
   womenOwned: boolean;
@@ -42,8 +37,13 @@ const HARD_CODED_CATEGORIES = [
   "University",
 ];
 
-// Updated to match Supabase format
 const EDITIONS = ["Northern", "Seven Metro", "Central", "Southern", "Statewide"];
+
+const SPECIAL_ATTRIBUTES: { key: keyof Filters; label: string }[] = [
+  { key: "womenOwned", label: "Women-Owned" },
+  { key: "pocOwned", label: "POC-Owned" },
+  { key: "lgbtqiaOwned", label: "LGBTQIA+-Owned" },
+];
 
 export function SearchFilters({
   categories,
@@ -64,131 +64,166 @@ export function SearchFilters({
     categories.find((c) => c.name === name)?.color_code ?? "#e5e7eb";
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
+
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Filters</h2>
+        <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">Filters</p>
         {activeFilterCount > 0 && (
-          <Button
-            variant="ghost"
-            size="sm"
+          <button
             onClick={onClearAll}
-            className="h-8 px-2"
+            className="inline-flex items-center gap-1.5 text-xs text-stone-400 hover:text-stone-700 transition-colors"
           >
-            <X className="h-4 w-4 mr-1" />
-            Clear all
-            <Badge variant="secondary" className="ml-2">
+            <X className="h-3 w-3" />
+            Clear
+            <span
+              className="inline-flex items-center justify-center h-4 w-4 rounded-full text-white text-[10px] font-bold"
+              style={{ backgroundColor: "#8a5c8a" }}
+            >
               {activeFilterCount}
-            </Badge>
-          </Button>
+            </span>
+          </button>
         )}
       </div>
 
-      <div className="space-y-4">
-        {/* Categories */}
-        <div>
-          <h3 className="font-medium mb-3">Categories</h3>
-          <div className="space-y-2">
-            {HARD_CODED_CATEGORIES.map((name) => {
-              const id = `category-${name}`;
-              const color = getCategoryColor(name);
-              return (
-                <div key={name} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={id}
-                    checked={selectedCategories.includes(name)}
-                    onCheckedChange={() => onCategoryChange(name)}
-                  />
-                  <Label
-                    htmlFor={id}
-                    className="flex items-center gap-2 text-sm font-normal cursor-pointer"
-                  >
-                    <span
-                      className="h-3 w-3 rounded-full"
-                      style={{ backgroundColor: color }}
-                    />
-                    {name}
-                  </Label>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        <Separator />
-
-        {/* Special Attributes */}
-        <div>
-          <h3 className="font-medium mb-3">Special Attributes</h3>
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="women-owned"
-                checked={filters.womenOwned}
-                onCheckedChange={() => onFilterChange("womenOwned")}
+      {/* Categories */}
+      <FilterSection label="Categories">
+        <div className="space-y-0.5">
+          {HARD_CODED_CATEGORIES.map((name) => {
+            const color = getCategoryColor(name);
+            const checked = selectedCategories.includes(name);
+            return (
+              <FilterPill
+                key={name}
+                label={name}
+                checked={checked}
+                onChange={() => onCategoryChange(name)}
+                dot={color}
               />
-              <Label
-                htmlFor="women-owned"
-                className="text-sm font-normal cursor-pointer"
-              >
-                Women-Owned
-              </Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="poc-owned"
-                checked={filters.pocOwned}
-                onCheckedChange={() => onFilterChange("pocOwned")}
-              />
-              <Label
-                htmlFor="poc-owned"
-                className="text-sm font-normal cursor-pointer"
-              >
-                POC-Owned
-              </Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="lgbtqia-owned"
-                checked={filters.lgbtqiaOwned}
-                onCheckedChange={() => onFilterChange("lgbtqiaOwned")}
-              />
-              <Label
-                htmlFor="lgbtqia-owned"
-                className="text-sm font-normal cursor-pointer"
-              >
-                LGBTQIA+ Owned
-              </Label>
-            </div>
-          </div>
+            );
+          })}
         </div>
+      </FilterSection>
 
-        <Separator />
+      <Divider />
 
-        {/* Edition */}
-        <div>
-          <h3 className="font-medium mb-3">Edition</h3>
-          <div className="space-y-2">
-            {EDITIONS.map((edition) => {
-              const id = `edition-${edition}`;
-              return (
-                <div key={edition} className="flex items-center space-x-2">
-                  <Checkbox
-                    id={id}
-                    checked={selectedEditions.includes(edition)}
-                    onCheckedChange={() => onEditionChange(edition)}
-                  />
-                  <Label
-                    htmlFor={id}
-                    className="text-sm font-normal cursor-pointer"
-                  >
-                    {edition}
-                  </Label>
-                </div>
-              );
-            })}
-          </div>
+      {/* Special Attributes */}
+      <FilterSection label="Special Attributes">
+        <div className="flex flex-wrap gap-2">
+          {SPECIAL_ATTRIBUTES.map(({ key, label }) => (
+            <ToggleChip
+              key={key}
+              label={label}
+              checked={filters[key]}
+              onChange={() => onFilterChange(key)}
+            />
+          ))}
         </div>
-      </div>
+      </FilterSection>
+
+      <Divider />
+
+      {/* Edition */}
+      <FilterSection label="Edition">
+        <div className="flex flex-wrap gap-2">
+          {EDITIONS.map((edition) => (
+            <ToggleChip
+              key={edition}
+              label={edition}
+              checked={selectedEditions.includes(edition)}
+              onChange={() => onEditionChange(edition)}
+            />
+          ))}
+        </div>
+      </FilterSection>
+
     </div>
+  );
+}
+
+/* ─── Helpers ──────────────────────────────────────────────────────── */
+
+function FilterSection({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="space-y-2">
+      <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">{label}</p>
+      {children}
+    </div>
+  );
+}
+
+function Divider() {
+  return <div className="h-px bg-stone-100" />;
+}
+
+function FilterPill({
+  label,
+  checked,
+  onChange,
+  dot,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+  dot?: string;
+}) {
+  return (
+    <button
+      onClick={onChange}
+      className={`
+        w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-left text-sm transition-all
+        ${checked
+          ? "bg-[#8a5c8a14] text-[#8a5c8a] font-medium ring-1 ring-[#8a5c8a40]"
+          : "text-stone-600 hover:bg-stone-50 hover:text-stone-900"
+        }
+      `}
+    >
+      {dot && (
+        <span
+          className="h-2.5 w-2.5 rounded-full shrink-0"
+          style={{ backgroundColor: dot }}
+        />
+      )}
+      <span className="leading-snug">{label}</span>
+      {checked && (
+        <span className="ml-auto shrink-0">
+          <svg className="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none">
+            <circle cx="7" cy="7" r="7" fill="#8a5c8a" />
+            <path d="M4 7l2 2 4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      )}
+    </button>
+  );
+}
+
+function ToggleChip({
+  label,
+  checked,
+  onChange,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: () => void;
+}) {
+  return (
+    <button
+      onClick={onChange}
+      className={`
+        inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium transition-all border
+        ${checked
+          ? "border-[#8a5c8a] text-[#8a5c8a] bg-[#8a5c8a10]"
+          : "border-stone-200 text-stone-500 hover:border-stone-400 hover:text-stone-700 bg-white"
+        }
+      `}
+    >
+      {label}
+    </button>
   );
 }

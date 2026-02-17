@@ -11,28 +11,26 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-// Image data with descriptions!
 const imageData = [
   {
     path: "/cycle-images/alt-inspiro.png",
-    description: "Alternative music inspiration from Minnesota's vibrant indie scene"
+    description: "Alternative music inspiration from Minnesota's vibrant indie scene",
   },
   {
     path: "/cycle-images/country-inspiro.png",
-    description: "Country music heritage and creative expression"
+    description: "Country music heritage and creative expression",
   },
   {
     path: "/cycle-images/hiphop-inspiro.png",
-    description: "Hip-hop culture and artistic innovation in the Twin Cities"
-  }
+    description: "Hip-hop culture and artistic innovation in the Twin Cities",
+  },
 ];
 
-// Random Image Component
 function RandomImagePane() {
-  const [selectedImage, setSelectedImage] = useState<typeof imageData[0] | null>(null);
-  
+  const [selectedImage, setSelectedImage] = useState<(typeof imageData)[0] | null>(null);
+  const [loaded, setLoaded] = useState(false);
+
   useEffect(() => {
-    // Select random image with description
     const randomIndex = Math.floor(Math.random() * imageData.length);
     setSelectedImage(imageData[randomIndex]);
   }, []);
@@ -40,24 +38,22 @@ function RandomImagePane() {
   if (!selectedImage) return null;
 
   return (
-    <div className="relative h-full w-full overflow-hidden bg-white flex items-center justify-center p-8">
-      <div className="relative w-full h-full flex flex-col items-center justify-center">
-        <div className="relative w-full h-full max-w-full max-h-full">
-          <Image
-            src={selectedImage.path}
-            alt={selectedImage.description}
-            fill
-            className="object-contain"
-            priority
-          />
-        </div>
-        {/* <div className="absolute bottom-8 left-8 right-8 flex justify-center">
-          <div className="inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground">
-            <p className="text-sm font-medium">
-              {selectedImage.description}
-            </p>
-          </div>
-        </div> */}
+    <div className="relative h-full w-full overflow-hidden flex items-center justify-center">
+      {/* Warm tinted background */}
+      <div className="absolute inset-0 bg-[#FAFAF8]" />
+
+      <div
+        className="relative w-full h-full max-w-md mx-auto p-12 transition-opacity duration-700"
+        style={{ opacity: loaded ? 1 : 0 }}
+      >
+        <Image
+          src={selectedImage.path}
+          alt={selectedImage.description}
+          fill
+          className="object-contain drop-shadow-xl"
+          priority
+          onLoad={() => setLoaded(true)}
+        />
       </div>
     </div>
   );
@@ -77,111 +73,142 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[#FAFAF8]">
       <Header />
 
-      {/* Hero Section - Double Paned */}
-      <section className="relative flex-1 flex items-center justify-center bg-background">
-        <div className="w-full h-full grid lg:grid-cols-2">
-          {/* Left Pane - Content */}
-          <div className="relative flex items-center justify-center px-6 py-20 md:py-32">
-            <div className="absolute inset-0 bg-grid-pattern opacity-5" />
-            <div className="relative z-10 max-w-2xl mx-auto text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-accent/20 border border-accent/30">
-                <Sparkles className="h-4 w-4 text-accent" />
-                <span className="text-sm font-medium text-accent-foreground">
-                  Discover Minnesota&apos;s Creative Community
-                </span>
-              </div>
+      {/* Hero */}
+      <section className="flex-1 grid lg:grid-cols-2 min-h-[calc(100vh-4rem)]">
 
-              <h1 className="text-4xl md:text-6xl font-bold mb-6 text-balance text-foreground">
-                Your Creative Resource
-              </h1>
+        {/* Left — Content */}
+        <div className="flex items-center justify-center px-8 py-20 md:py-28 lg:py-0">
+          <div className="max-w-lg w-full">
 
-              <p className="text-lg md:text-xl text-foreground/80 mb-8 text-balance">
-                Discover galleries, art supply stores, and creative resources across the state
-              </p>
-
-              <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-3 mb-8">
-                <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Search for studios, galleries, supplies..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 h-12 text-base"
-                  />
-                </div>
-                <Button type="submit" size="lg" className="h-12 px-8">
-                  Search
-                </Button>
-              </form>
-
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
-                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30">
-                  <Link href="/browse">
-                    Browse All Resources
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30">
-                  <Link href="/map">
-                    Map
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="lg" asChild className="bg-card border-accent/30">
-                  <Link href="https://miraclearts.org/">
-                    Miracle Arts
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-              </div>
+            {/* Eyebrow */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 mb-8 rounded-full border border-[#8a5c8a44] bg-white shadow-sm">
+              <Sparkles className="h-3.5 w-3.5 text-[#8a5c8a]" />
+              <span className="text-xs font-semibold uppercase tracking-widest text-[#8a5c8a]">
+                Minnesota Creative Community
+              </span>
             </div>
-          </div>
 
-          {/* Right Pane - Random Image */}
-          <div className="hidden lg:block relative min-h-[600px]">
-            <RandomImagePane />
-          </div>
-        </div>
-      </section>
+            <h1 className="text-5xl md:text-6xl font-bold tracking-tight leading-[1.05] mb-5 text-[#8a5c8a]">
+              Your Creative
+              <br />
+              <span className="text-[#c4a0c4]">Resource</span>
+            </h1>
 
-      {/* Features Section */}
-      <section className="py-16 border-t bg-card">
-        <div className="container max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-accent/20 mb-4">
-                <Search className="h-6 w-6 text-accent" />
+            <p className="text-base md:text-lg leading-relaxed mb-10 max-w-md text-[#8a5c8a]/70">
+              Discover galleries, art supply stores, and creative resources across the state — all in one place.
+            </p>
+
+            {/* Search */}
+            <form onSubmit={handleSearch} className="flex gap-2 mb-8">
+              <div className="relative flex-1">
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-stone-400" />
+                <Input
+                  type="text"
+                  placeholder="Studios, galleries, supplies…"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 h-11 text-sm bg-white border-stone-200 rounded-full shadow-sm focus-visible:ring-stone-300 text-stone-800 placeholder:text-stone-400"
+                />
               </div>
-              <h3 className="font-semibold text-lg text-background mb-2">Advanced Search</h3>
-              <p className="text-sm text-background/70">
-                Filter by category, location, and special attributes to find exactly what you need
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-accent/20 mb-4">
-                <Map className="h-6 w-6 text-accent" />
-              </div>
-              <h3 className="font-semibold text-lg text-background mb-2">Interactive Map</h3>
-              <p className="text-sm text-background/70">
-                Explore resources geographically with our interactive map and clustering features
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="inline-flex items-center justify-center h-12 w-12 rounded-lg bg-accent/20 mb-4">
-                <Sparkles className="h-6 w-6 text-accent" />
-              </div>
-              <h3 className="font-semibold text-lg text-background mb-2">Save & Organize</h3>
-              <p className="text-sm text-background/70">
-                Create custom lists and save your favorite resources for easy access
-              </p>
+              <Button
+                type="submit"
+                className="h-11 px-6 rounded-full text-white text-sm font-medium shadow-sm bg-[#8a5c8a] hover:bg-[#7a4c7a]"
+              >
+                Search
+              </Button>
+            </form>
+
+            {/* Quick links */}
+            <div className="flex flex-wrap gap-2">
+              <QuickLink href="/browse" label="Browse All" />
+              <QuickLink href="/map" label="Map View" icon={<Map className="h-3.5 w-3.5" />} />
+              <QuickLink href="https://miraclearts.org/" label="Miracle Arts" external />
             </div>
           </div>
         </div>
+
+        {/* Right — Image */}
+        <div className="hidden lg:block relative border-l border-stone-200">
+          <RandomImagePane />
+        </div>
       </section>
+
+      {/* Feature strip */}
+      <section className="border-t border-stone-200 bg-white">
+        <div className="container max-w-5xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-stone-100">
+            <FeatureTile
+              icon={<Search className="h-5 w-5" />}
+              title="Advanced Search"
+              body="Filter by category, location, and special attributes to find exactly what you need."
+            />
+            <FeatureTile
+              icon={<Map className="h-5 w-5" />}
+              title="Interactive Map"
+              body="Explore resources geographically with our interactive map and clustering features."
+            />
+            <FeatureTile
+              icon={<Sparkles className="h-5 w-5" />}
+              title="Save & Organize"
+              body="Create custom lists and save your favorite resources for easy access."
+            />
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+/* ─── Helpers ──────────────────────────────────────────────────────── */
+
+function QuickLink({
+  href,
+  label,
+  icon,
+  external,
+}: {
+  href: string;
+  label: string;
+  icon?: React.ReactNode;
+  external?: boolean;
+}) {
+  const inner = (
+    <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium text-stone-600 bg-white border border-stone-200 hover:border-stone-400 hover:text-stone-900 transition-colors shadow-sm">
+      {icon}
+      {label}
+      <ArrowRight className="h-3.5 w-3.5" />
+    </span>
+  );
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {inner}
+      </a>
+    );
+  }
+  return <Link href={href}>{inner}</Link>;
+}
+
+function FeatureTile({
+  icon,
+  title,
+  body,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  body: string;
+}) {
+  return (
+    <div className="px-8 py-10 flex flex-col gap-3">
+      <div className="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-stone-100 text-stone-500">
+        {icon}
+      </div>
+      <h3 className="font-semibold text-stone-800 text-sm">{title}</h3>
+      <p className="text-sm text-stone-500 leading-relaxed">{body}</p>
     </div>
   );
 }

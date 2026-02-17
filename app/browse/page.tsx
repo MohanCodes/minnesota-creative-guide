@@ -57,6 +57,7 @@ export default function BrowsePage() {
   const [filters, setFilters] = useState({
     womenOwned: false,
     pocOwned: false,
+    lgbtqiaOwned: false,
     accessible: false,
     youthFocused: false,
   });
@@ -115,6 +116,7 @@ export default function BrowsePage() {
       selectedEditions.length > 0 ||
       filters.womenOwned ||
       filters.pocOwned ||
+      filters.lgbtqiaOwned ||
       filters.accessible ||
       filters.youthFocused;
 
@@ -164,6 +166,9 @@ export default function BrowsePage() {
     if (filters.pocOwned) {
       filtered = filtered.filter((org) => org.poc_owned === true);
     }
+    if (filters.lgbtqiaOwned) {
+      filtered = filtered.filter((org) => org.lgbtqia_owned === true);
+    }
 
     return filtered;
   }, [
@@ -173,6 +178,7 @@ export default function BrowsePage() {
     selectedEditions,
     filters.womenOwned,
     filters.pocOwned,
+    filters.lgbtqiaOwned,
     filters.accessible,
     filters.youthFocused,
   ]);
@@ -226,6 +232,7 @@ export default function BrowsePage() {
     setFilters({
       womenOwned: false,
       pocOwned: false,
+      lgbtqiaOwned: false,
       accessible: false,
       youthFocused: false,
     });
