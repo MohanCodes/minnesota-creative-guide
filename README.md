@@ -39,7 +39,7 @@ The Minnesota Creative Guide is a modern web application that serves as a compre
 - **Community Theatre** - Performance venues and theater groups
 - **Dance School & Studio** - Dance education and performance spaces
 - **Makerspace** - Shared workshops and fabrication labs
-- **Non-profit Art Service Organization** - Community art services
+- **Art Service Organization** - Community art services
 - **Pottery/Sewing Studio** - Craft and textile workspaces
 
 ### **Advanced Search & Filtering**

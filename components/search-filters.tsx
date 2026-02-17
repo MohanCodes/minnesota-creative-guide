@@ -34,7 +34,7 @@ const HARD_CODED_CATEGORIES = [
   "Community Theatre",
   "Dance School & Studio",
   "Makerspace",
-  "Non-profit Art Service Organization",
+  "Art Service Organization",
   "Pottery/Sewing Studio",
   "Recording Studio",
   "Regional Art Council",
