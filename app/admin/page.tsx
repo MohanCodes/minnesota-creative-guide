@@ -37,6 +37,7 @@ interface Organization {
   how_to_support: string | null;
   women_owned: boolean;
   poc_owned: boolean;
+  lgbtqia_owned: boolean;
   comments: string | null;
   edition: string[] | null;
   categories: string[] | null;
@@ -53,6 +54,7 @@ export default function AdminPage() {
   const [filterServiceArea, setFilterServiceArea] = useState<string>("");
   const [filterWomenOwned, setFilterWomenOwned] = useState<string>("");
   const [filterPocOwned, setFilterPocOwned] = useState<string>("");
+  const [filterLgbtqiaOwned, setFilterLgbtqiaOwned] = useState<string>("");
   const [pageSize, setPageSize] = useState<number>(100);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -93,6 +95,28 @@ export default function AdminPage() {
     }
   };
 
+  const handleToggleOwnership = async (id: string, field: 'women_owned' | 'poc_owned' | 'lgbtqia_owned', value: boolean) => {
+    try {
+      const supabase = createClient();
+      const { error } = await supabase
+        .from('resources')
+        .update({ [field]: value })
+        .eq('id', id);
+
+      if (error) throw error;
+      
+      // Update local state to reflect the change immediately
+      setOrganizations(prev => prev.map(org => 
+        org.id === id ? { ...org, [field]: value } : org
+      ));
+    } catch (error) {
+      console.error("Error updating ownership status:", error);
+      alert(`Error updating ownership status: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      // Reload organizations to ensure consistency if there was an error
+      await loadOrganizations();
+    }
+  };
+
   const handleSort = (field: keyof Organization) => {
     if (sortField === field) {
       setSortDirection(sortDirection === "asc" ? "desc" : "asc");
@@ -123,8 +147,11 @@ export default function AdminPage() {
       const matchesPocOwned = filterPocOwned === "" || 
         (filterPocOwned === "yes" && org.poc_owned) ||
         (filterPocOwned === "no" && !org.poc_owned);
+      const matchesLgbtqiaOwned = filterLgbtqiaOwned === "" || 
+        (filterLgbtqiaOwned === "yes" && org.lgbtqia_owned) ||
+        (filterLgbtqiaOwned === "no" && !org.lgbtqia_owned);
 
-      return matchesSearch && matchesCategory && matchesServiceArea && matchesWomenOwned && matchesPocOwned;
+      return matchesSearch && matchesCategory && matchesServiceArea && matchesWomenOwned && matchesPocOwned && matchesLgbtqiaOwned;
     })
     .sort((a, b) => {
       const aValue = a[sortField];
@@ -154,6 +181,17 @@ export default function AdminPage() {
         return sortDirection === "asc" ? comparison : -comparison;
       }
       
+      // Special handling for boolean fields (women_owned, poc_owned, lgbtqia_owned)
+      if (sortField === 'women_owned' || sortField === 'poc_owned' || sortField === 'lgbtqia_owned') {
+        const aBool = Boolean(aValue);
+        const bBool = Boolean(bValue);
+        
+        if (aBool === bBool) return 0;
+        // For ascending: false (0) comes before true (1)
+        // For descending: true (1) comes before false (0)
+        return sortDirection === "asc" ? (aBool ? 1 : -1) : (aBool ? -1 : 1);
+      }
+      
       const comparison = String(aValue).localeCompare(String(bValue));
       return sortDirection === "asc" ? comparison : -comparison;
     });
@@ -167,7 +205,7 @@ export default function AdminPage() {
   // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, filterCategory, filterServiceArea, filterWomenOwned, filterPocOwned]);
+  }, [searchTerm, filterCategory, filterServiceArea, filterWomenOwned, filterPocOwned, filterLgbtqiaOwned]);
 
   if (loading) {
     return (
@@ -215,7 +253,7 @@ export default function AdminPage() {
             </div>
             
             {/* Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
               <div>
                 <label className="block text-xs font-medium text-gray-700 mb-1">Category</label>
                 <select
@@ -269,10 +307,23 @@ export default function AdminPage() {
                   <option value="no">No</option>
                 </select>
               </div>
+              
+              <div>
+                <label className="block text-xs font-medium text-gray-700 mb-1">LGBTQIA+ Owned</label>
+                <select
+                  value={filterLgbtqiaOwned}
+                  onChange={(e) => setFilterLgbtqiaOwned(e.target.value)}
+                  className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">All</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
             </div>
             
             {/* Clear Filters */}
-            {(searchTerm || filterCategory || filterServiceArea || filterWomenOwned || filterPocOwned) && (
+            {(searchTerm || filterCategory || filterServiceArea || filterWomenOwned || filterPocOwned || filterLgbtqiaOwned) && (
               <div className="flex justify-end">
                 <button
                   onClick={() => {
@@ -281,6 +332,7 @@ export default function AdminPage() {
                     setFilterServiceArea("");
                     setFilterWomenOwned("");
                     setFilterPocOwned("");
+                    setFilterLgbtqiaOwned("");
                   }}
                   className="text-sm text-blue-600 hover:text-blue-800"
                 >
@@ -407,6 +459,20 @@ export default function AdminPage() {
                     )}
                   </div>
                 </th>
+                <th 
+                  className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" 
+                  style={{width: '6%'}}
+                  onClick={() => handleSort('lgbtqia_owned')}
+                >
+                  <div className="flex items-center justify-center">
+                    LGBTQIA+ Owned
+                    {sortField === 'lgbtqia_owned' && (
+                      <span className="ml-1">
+                        {sortDirection === 'asc' ? '↑' : '↓'}
+                      </span>
+                    )}
+                  </div>
+                </th>
                 <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider" style={{width: '130px'}}>Actions</th>
               </tr>
             </thead>
@@ -460,14 +526,31 @@ export default function AdminPage() {
                     </a>
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-1 text-xs rounded-full inline-block ${org.women_owned ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>
-                      {org.women_owned ? "Yes" : "No"}
-                    </span>
+                    <input
+                      type="checkbox"
+                      checked={org.women_owned}
+                      onChange={() => handleToggleOwnership(org.id, 'women_owned', !org.women_owned)}
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                      title="Toggle Women Owned status"
+                    />
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-1 text-xs rounded-full inline-block ${org.poc_owned ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>
-                      {org.poc_owned ? "Yes" : "No"}
-                    </span>
+                    <input
+                      type="checkbox"
+                      checked={org.poc_owned}
+                      onChange={() => handleToggleOwnership(org.id, 'poc_owned', !org.poc_owned)}
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                      title="Toggle POC Owned status"
+                    />
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <input
+                      type="checkbox"
+                      checked={org.lgbtqia_owned}
+                      onChange={() => handleToggleOwnership(org.id, 'lgbtqia_owned', !org.lgbtqia_owned)}
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer"
+                      title="Toggle LGBTQIA+ Owned status"
+                    />
                   </td>
                   <td className="px-4 py-3 text-center">
                     <div className="flex gap-2 justify-center whitespace-nowrap">

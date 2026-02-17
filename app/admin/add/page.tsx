@@ -36,6 +36,7 @@ interface Organization {
   how_to_support: string | null;
   women_owned: boolean;
   poc_owned: boolean;
+  lgbtqia_owned: boolean;
   comments: string | null;
   edition: string[] | null;
   categories: string[] | null;
@@ -47,6 +48,7 @@ export default function AddOrganizationPage() {
   const [formData, setFormData] = useState<Partial<Organization>>({
     women_owned: false,
     poc_owned: false,
+    lgbtqia_owned: false,
   });
 
   const handleSave = async () => {
@@ -184,7 +186,7 @@ export default function AddOrganizationPage() {
                 />
               </div>
 
-              <div className="flex items-center space-x-4">
+              <div className="flex flex-col space-y-2">
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -203,6 +205,16 @@ export default function AddOrganizationPage() {
                     className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-2"
                   />
                   <span className="text-sm font-medium text-gray-700">POC Owned</span>
+                </label>
+
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={formData.lgbtqia_owned || false}
+                    onChange={(e) => handleInputChange('lgbtqia_owned', e.target.checked)}
+                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500 mr-2"
+                  />
+                  <span className="text-sm font-medium text-gray-700">LGBTQIA+ Owned</span>
                 </label>
               </div>
             </div>
