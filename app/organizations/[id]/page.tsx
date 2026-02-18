@@ -1,8 +1,6 @@
 "use client";
 
 import { Header } from "@/components/header";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { MapPin, Phone, Mail, Globe, ExternalLink, ArrowLeft, Calendar, Briefcase, Heart } from "lucide-react";
 import { CopyLinkButton } from "@/components/copy-link-button";
@@ -105,9 +103,7 @@ export default function OrganizationPage() {
         <div className="container max-w-5xl mx-auto py-32 px-6 text-center">
           <p className="text-stone-400 text-sm uppercase tracking-widest mb-4">404</p>
           <h1 className="text-3xl font-semibold text-stone-800 mb-6">Organization not found</h1>
-          <Button asChild variant="outline" className="rounded-full px-8">
-            <Link href="/browse">← Browse Resources</Link>
-          </Button>
+          <Link href="/browse" className="inline-flex items-center gap-2 px-6 h-10 rounded-full border border-stone-200 text-stone-600 hover:border-stone-400 hover:text-stone-900 text-sm font-medium transition-colors bg-white">← Browse Resources</Link>
         </div>
       </div>
     );
@@ -318,9 +314,7 @@ export default function OrganizationPage() {
               )}
 
               <div className="px-6 py-5 mt-2 bg-stone-50 border-t border-stone-100">
-                <Button asChild className="w-full rounded-full bg-stone-900 text-white hover:bg-[#7a4c7a] text-sm h-10">
-                  <Link href="/browse">Browse Similar Resources</Link>
-                </Button>
+                <Link href="/browse" className="inline-flex items-center justify-center w-full h-10 rounded-full bg-[#8a5c8a] hover:bg-[#7a4c7a] text-white text-sm font-medium transition-colors">Browse Similar Resources</Link>
               </div>
             </div>
           </aside>
