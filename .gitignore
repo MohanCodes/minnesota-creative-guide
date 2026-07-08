@@ -4,3 +4,4 @@ pw-info.txt
 py.py
 node_modules/
 .next/
+.claude/

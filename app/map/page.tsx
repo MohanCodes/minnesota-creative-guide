@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect, useMemo, useCallback, useRef } from "react"
+import { useSearchParams } from "next/navigation"
 import { Header } from "@/components/header"
 import { SearchFilters } from "@/components/search-filters"
 import { Button } from "@/components/ui/button"
@@ -11,6 +12,10 @@ import { Filter, Search } from "lucide-react"
 import { getOrganizationsClient, getCategoriesClient } from "@/lib/supabase-utils"
 
 export default function MapPage() {
+  const searchParams = useSearchParams()
+  // ?embed=true renders the page for use inside an <iframe>: no site header/nav.
+  const isEmbed = searchParams.get("embed") === "true"
+
   const [searchQuery, setSearchQuery] = useState("")
   const [debouncedSearchQuery, setDebouncedSearchQuery] = useState("")
   const debounceTimeoutRef = useRef<NodeJS.Timeout>()
@@ -192,7 +197,7 @@ export default function MapPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      {!isEmbed && <Header />}
       <div className="flex-1 flex overflow-hidden relative">
         {/* Desktop Filters */}
         <aside className="hidden lg:block w-64 border-r overflow-y-auto z-10 relative bg-background">

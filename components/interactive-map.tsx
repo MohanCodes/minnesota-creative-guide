@@ -141,7 +141,7 @@ export function InteractiveMap({ organizations, categories }: InteractiveMapProp
   return (
     <div className="relative w-full h-full">
       {/* Map */}
-      <div ref={mapRef} className="w-full h-3/4 min-h-[600px] rounded-2xl overflow-hidden border border-stone-200" style={{ zIndex: 0 }} />
+      <div ref={mapRef} className="w-full h-full rounded-2xl overflow-hidden border border-stone-200" style={{ zIndex: 0 }} />
 
       {/* Selected org panel */}
       {selectedOrg && (
